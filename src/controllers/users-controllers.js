@@ -1,4 +1,6 @@
 const Usuario = require('../models/Usuario');
+const token = require('jsonwebtoken');
+const validatorCadastro = require('../validators/cadastro/validators-cadastro');
 
 module.exports = {
   async index(req, res) {
@@ -7,17 +9,40 @@ module.exports = {
     return res.json(users);
   },
 
-  async store(req, res) {
+  async buscarUsuario(req, res){
+    console.log(email);
+    const user = await Usuario.findOne({ where: { email } });
+    return res.json(user);
+  },
+
+  async logar(req, res){
+    const email = req.body.email;
+    const senha = req.body.senha;
+    const user = await Usuario.findOne({ where: { email, senha } });
+
+    //aqui precisa ser conferido o tipo do usuário
+    if(!user){
+
+    }
+    return res.json(user);
+  },
+
+  async cadastrarUsuario(req, res) {
     const {
       nome, email, senha, cpf, cidade, 
       rua, numero, bairro, cep, telefone
     } = req.body;
 
-    const user = await Usuario.create({
-      nome, email, senha, cpf, cidade, 
-      rua, numero, bairro, cep, telefone 
-     });
-
-    return res.json(user);
+    //validar se usuário já existe
+    const errors = await validatorCadastro.verificaBaseDados(req.body);
+    if(errors.length === 0){
+      const user = await Usuario.create({
+        nome, email, senha, cpf, cidade, 
+        rua, numero, bairro, cep, telefone 
+       });
+       return res.json(user);
+    } else {
+      return res.json(errors);
+    }
   }
 };
