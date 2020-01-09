@@ -1,11 +1,7 @@
 const Usuario = require('../../models/Usuario');
 
 module.exports ={
-    async verificaBaseDados(req){
-        const {
-            nome, email, senha, cpf, cidade, 
-            rua, numero, bairro, cep, telefone
-        } = req;
+    async verificaBaseDados(email, cpf){
         let errors = [];
         let user;
         //falta validar crea e crmv

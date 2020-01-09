@@ -34,12 +34,14 @@ module.exports = {
     } = req.body;
 
     //validar se usuário já existe
-    const errors = await validatorCadastro.verificaBaseDados(req.body);
+    const errors = await validatorCadastro.verificaBaseDados(email, cpf);
     if(errors.length === 0){
       const user = await Usuario.create({
         nome, email, senha, cpf, cidade, 
         rua, numero, bairro, cep, telefone 
        });
+
+       //enviar email de confirmação
        return res.json(user);
     } else {
       return res.json(errors);
