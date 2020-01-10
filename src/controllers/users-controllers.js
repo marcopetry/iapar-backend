@@ -1,6 +1,7 @@
 const Usuario = require('../models/Usuario');
 const token = require('jsonwebtoken');
 const validatorCadastro = require('../validators/cadastro/validators-cadastro');
+const enviarEmail = require('../services/email-service');
 
 module.exports = {
   async index(req, res) {
@@ -42,6 +43,7 @@ module.exports = {
        });
 
        //enviar email de confirmação
+       enviarEmail.send('marcomattospetry@gmail.com');
        return res.json(user);
     } else {
       return res.json(errors);
