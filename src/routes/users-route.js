@@ -8,6 +8,6 @@ const UserController = require('../controllers/users-controllers');
 routes.get('/user', UserController.index);
 routes.post('/user', UserController.cadastrarUsuario);
 //routes.post('/validations', validations.cadastrarToken);
-routes.get('/auth', UserController.logar);
+routes.get('/auth/:token', UserController.validarUsuario);
 
 module.exports = routes;

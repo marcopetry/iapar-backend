@@ -1,8 +1,8 @@
 const Usuario = require('../models/Usuario');
-const token = require('jsonwebtoken');
 const validatorCadastro = require('../validators/cadastro/validators-cadastro');
 const enviarEmail = require('../services/email-service');
 const Builder = require('./BuilderUser/BuilderUser');
+const { generateToken, decodeToken } = require('../services/auth-service');
 
 module.exports = {
   async index(req, res) {
@@ -44,8 +44,11 @@ module.exports = {
         tipo_usuario, token: 'false'
       });
 
-      //enviar email de confirmação
-      //enviarEmail.send('marcomattospetry@gmail.com');
+      //gera token para validar cadastro
+      const token = await generateToken({ email });
+
+      //enviar email de confirmação passa email do cadastrado + token para validar
+      enviarEmail.send('marcomattospetry@gmail.com', token);
       const tecnico = await Builder.construirTipoUsuario(req.body, user.id);
 
       return res.json({ user, tecnico });
@@ -53,4 +56,11 @@ module.exports = {
       return res.json(errors);
     }
   }, 
+
+  async validarUsuario(req, res, next){
+    const { token } = req.params;
+
+    const tokenDecodificado = await decodeToken(token);
+    return res.json(tokenDecodificado);
+  }
 };
