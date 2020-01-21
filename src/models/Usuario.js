@@ -14,15 +14,13 @@ class Usuario extends Model {
       bairro: DataTypes.STRING,
       cep: DataTypes.STRING,
       telefone: DataTypes.STRING,
+      tipo_usuario: DataTypes.STRING,
+      token: DataTypes.STRING,
     }, {
       sequelize
     })
   }
 
- /*  static associate(models) {
-    this.hasMany(models.Address, { foreignKey: 'user_id', as: 'addresses' });
-    this.belongsToMany(models.Tech, { foreignKey: 'user_id', through: 'user_techs', as: 'techs' });
-  } */
 }
 
 module.exports = Usuario;

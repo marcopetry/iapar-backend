@@ -5,9 +5,9 @@ module.exports = {
     return queryInterface.createTable('tecnicos', {
       id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         primaryKey: true,
-        autoIncrement: true,
+        allowNull: false,
+        autoIncrement: false,
       },
       ano_formatura: {
         type: Sequelize.STRING,

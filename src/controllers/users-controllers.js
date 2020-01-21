@@ -31,15 +31,17 @@ module.exports = {
   async cadastrarUsuario(req, res) {
     const {
       nome, email, senha, cpf, cidade,
-      rua, numero, bairro, cep, telefone
+      rua, numero, bairro, cep, telefone, tipo_usuario
     } = req.body;
 
     //validar se usuário já existe
+    console.log(tipo_usuario);
     const errors = await validatorCadastro.verificaBaseDados(email, cpf);
     if (errors.length === 0) {
       const user = await Usuario.create({
         nome, email, senha, cpf, cidade,
-        rua, numero, bairro, cep, telefone
+        rua, numero, bairro, cep, telefone, 
+        tipo_usuario, token: 'false'
       });
 
       //enviar email de confirmação
@@ -50,5 +52,5 @@ module.exports = {
     } else {
       return res.json(errors);
     }
-  }
+  }, 
 };

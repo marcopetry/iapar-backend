@@ -20,10 +20,12 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
       },
       cpf: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true,
       },
       cidade: {
         type: Sequelize.STRING,
@@ -52,6 +54,14 @@ module.exports = {
       senha: {
         type: Sequelize.STRING,
         allowNull: false
+      },
+      tipo_usuario: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      token: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       created_at: {
         type: Sequelize.DATE,
