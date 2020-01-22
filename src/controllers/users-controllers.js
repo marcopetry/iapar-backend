@@ -45,7 +45,7 @@ module.exports = {
       });
 
       //gera token para validar cadastro
-      const token = await generateToken({ email });
+      const token = await generateToken({ email, tipo_usuario });
 
       //enviar email de confirmação passa email do cadastrado + token para validar
       enviarEmail.send('marcomattospetry@gmail.com', token);
@@ -61,6 +61,9 @@ module.exports = {
     const { token } = req.params;
 
     const tokenDecodificado = await decodeToken(token);
-    return res.json(tokenDecodificado);
+
+    //valida o usuario no banco a partir do desparo do email verificado
+    const resposta = await Usuario.update({token: 'true'}, {returning: true, where: {email: tokenDecodificado.email} });
+    return res.json(resposta);
   }
 };
