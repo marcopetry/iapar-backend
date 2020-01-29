@@ -34,7 +34,7 @@ module.exports = {
       rua, numero, bairro, cep, telefone, tipo_usuario
     } = req.body;
 
-    //validar se usuário já existe
+    //validar se usuário já existe, email ou cpf
     //retorna true se não existir usuário e retorna uma string caso tenha e o campo que já tem.
     const errors = await validatorCadastro.verificaBaseDados(email, cpf);
     if (errors === true) {
