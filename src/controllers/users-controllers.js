@@ -35,9 +35,9 @@ module.exports = {
     } = req.body;
 
     //validar se usuário já existe
-    console.log(tipo_usuario);
+    //retorna true se não existir usuário e retorna uma string caso tenha e o campo que já tem.
     const errors = await validatorCadastro.verificaBaseDados(email, cpf);
-    if (errors.length === 0) {
+    if (errors === true) {
       const user = await Usuario.create({
         nome, email, senha, cpf, cidade,
         rua, numero, bairro, cep, telefone, 
@@ -50,10 +50,11 @@ module.exports = {
       //enviar email de confirmação passa email do cadastrado + token para validar
       enviarEmail.send('marcomattospetry@gmail.com', token);
       const tecnico = await Builder.construirTipoUsuario(req.body, user.id);
-
-      return res.json({ user, tecnico });
-    } else {
-      return res.json(errors);
+      
+      return tecnico ? res.json({resposta: 'Cadastro realizado com sucesso.'}) : res.json({resposta: 'Tente novamente.'})
+    } 
+    else {
+      return res.json({resposta: errors});
     }
   }, 
 
