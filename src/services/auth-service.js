@@ -10,6 +10,18 @@ exports.decodeToken = async (token) => {
     return data;
 }
 
+exports.verificaToken = async function (token) {
+
+    if (!token) {
+        return 'Acesso Restrito';
+    } else {
+        jwt.verify(token, global.SALT_KEY, function (error, decoded) {
+            return error ? 'Token Inválido' : decoded;
+        });
+    }
+};
+
+
 exports.authorize = function (req, res, next) {
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
 

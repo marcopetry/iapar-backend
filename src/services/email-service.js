@@ -158,7 +158,7 @@ exports.send = async (to, token) => {
                         <tbody>
                         <tr>
                         <td align="center" bgcolor="#333333" class="inner-td" style="border-radius:6px; font-size:16px; text-align:center; background-color:inherit;">
-                            <a href="http://localhost:3333/auth/${token}" style="background-color:#333333; border:1px solid #333333; border-color:#333333; border-radius:6px; border-width:1px; color:#ffffff; display:inline-block; font-size:14px; font-weight:normal; letter-spacing:0px; line-height:normal; padding:12px 18px 12px 18px; text-align:center; text-decoration:none; border-style:solid; width:600px;" target="_blank">Clique aqui para confirmar seu cadastro</a>
+                            <a href="http://localhost:3000/auth/${token}" style="background-color:#333333; border:1px solid #333333; border-color:#333333; border-radius:6px; border-width:1px; color:#ffffff; display:inline-block; font-size:14px; font-weight:normal; letter-spacing:0px; line-height:normal; padding:12px 18px 12px 18px; text-align:center; text-decoration:none; border-style:solid; width:600px;" target="_blank">Clique aqui para confirmar seu cadastro</a>
                         </td>
                         </tr>
                         </tbody>

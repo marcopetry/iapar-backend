@@ -2,7 +2,7 @@ const Usuario = require('../models/Usuario');
 const validatorCadastro = require('../validators/cadastro/validators-cadastro');
 const enviarEmail = require('../services/email-service');
 const Builder = require('./BuilderUser/BuilderUser');
-const { generateToken, decodeToken } = require('../services/auth-service');
+const { generateToken, decodeToken, verificaToken } = require('../services/auth-service');
 
 module.exports = {
   async index(req, res) {
@@ -59,10 +59,16 @@ module.exports = {
   }, 
 
   async validarUsuario(req, res, next){
-    const { token } = req.params;
+    const { token } = req.body;
+    let tokenDecodificado;
 
-    const tokenDecodificado = await decodeToken(token);
-
+    //console.log(await verificaToken(token));
+    try {
+      tokenDecodificado = await decodeToken(token);
+    } catch(e){
+      return res.json({erro: 'Token inválido'})
+    }
+    
     //valida o usuario no banco a partir do desparo do email verificado
     const resposta = await Usuario.update({token: 'true'}, {returning: true, where: {email: tokenDecodificado.email} });
     return res.json(resposta);
