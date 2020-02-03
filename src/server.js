@@ -1,7 +1,6 @@
 const express = require('express');
 const routes = require('./routes/users-route');
 const cors = require('cors');
-const controller = require('./controllers/users-controllers');
 
 require('./database');
 
