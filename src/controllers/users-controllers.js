@@ -19,13 +19,16 @@ module.exports = {
   async logar(req, res) {
     const email = req.body.email;
     const senha = req.body.senha;
-    const user = await Usuario.findOne({ where: { email, senha } });
+    const user = await Usuario.findOne({ where: { email, senha }, attributes: ['tipo_usuario', 'token'] });
 
     //aqui precisa ser conferido o tipo do usuário
-    if (!user) {
+    if (!user) return res.status(200).send({tipo_usuario: 'Não encontrado.'});
+    
+    if(user.token === 'false') return res.status(200).send({tipo_usuario: 'Não verificado.'});
 
-    }
-    return res.json(user);
+    const token = await generateToken({email, tipo_usuario: user.tipo_usuario});
+    return res.status(200).send({token, tipo_usuario: user.tipo_usuario});
+    
   },
 
   async cadastrarUsuario(req, res) {
@@ -62,7 +65,6 @@ module.exports = {
     const token = req.params.token;
     let tokenDecodificado;
 
-    //console.log(await verificaToken(token));
     try {
       tokenDecodificado = await decodeToken(token);
     } catch(e){
@@ -87,5 +89,19 @@ module.exports = {
       return res.json({ message: 'Usuário não encontrado. Digite novamente o email ou faça o cadastro.'});
     }
 
-  }
+  },
+
+  async retornarUsuario(req, res, next){
+    const token = req.params.token;
+    let tokenDecodificado;
+
+    try {
+      tokenDecodificado = await decodeToken(token);
+    } catch(e){
+      return res.json({ erro: 'Token inválido' })
+    }
+    const user = await Usuario.findOne({ where: { email: tokenDecodificado.email } });
+    //valida o usuario no banco a partir do desparo do email verificado
+    return res.json(user);
+  },
 };
