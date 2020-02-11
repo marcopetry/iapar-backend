@@ -15,7 +15,7 @@ class Usuario extends Model {
       cep: DataTypes.STRING,
       telefone: DataTypes.STRING,
       tipo_usuario: DataTypes.STRING,
-      token: DataTypes.STRING,
+      verificado: DataTypes.BOOLEAN,
     }, {
       sequelize
     })

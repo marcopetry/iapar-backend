@@ -8,7 +8,7 @@ module.exports = {
   async index(req, res) {
     const users = await Usuario.findAll();
 
-    return res.json(users);
+    return res.status(200).send(users);
   },
 
   async buscarUsuario( email ) {
@@ -19,12 +19,12 @@ module.exports = {
   async logar(req, res) {
     const email = req.body.email;
     const senha = req.body.senha;
-    const user = await Usuario.findOne({ where: { email, senha }, attributes: ['tipo_usuario', 'token'] });
+    const user = await Usuario.findOne({ where: { email, senha }, attributes: ['tipo_usuario', 'verificado'] });
 
     //aqui precisa ser conferido o tipo do usuário
     if (!user) return res.status(200).send({tipo_usuario: 'Usuário não encontrado. Cadastre-se ou confira seus dados.'});
     
-    if(user.token === 'false') return res.status(200).send({tipo_usuario: 'Falta validar seu email. Acesse seu email para validar.'});
+    if(!user.verificado) return res.status(200).send({tipo_usuario: 'Falta validar seu email. Acesse seu email para validar.'});
 
     const token = await generateToken({email, tipo_usuario: user.tipo_usuario});
     return res.status(200).send({token, tipo_usuario: user.tipo_usuario});
@@ -44,7 +44,7 @@ module.exports = {
       const user = await Usuario.create({
         nome, email, senha, cpf, cidade,
         rua, numero, bairro, cep, telefone, 
-        tipo_usuario, token: 'false'
+        tipo_usuario
       });
 
       //gera token para validar cadastro
@@ -65,6 +65,7 @@ module.exports = {
     const token = req.params.token;
     let tokenDecodificado;
 
+    //sempre vem token pois eu valido no front end
     try {
       tokenDecodificado = await decodeToken(token);
     } catch(e){
@@ -72,7 +73,7 @@ module.exports = {
     }
     
     //valida o usuario no banco a partir do desparo do email verificado
-    const [, resposta ] = await Usuario.update({token: 'true'}, {returning: true, where: {email: tokenDecodificado.email} });
+    const [, resposta ] = await Usuario.update({verificado: true}, {returning: true, where: {email: tokenDecodificado.email} });
     return res.json(resposta[0]);
   },
 
@@ -91,7 +92,8 @@ module.exports = {
 
   },
 
-  async retornarUsuario(req, res, next){
+  //valida o token, faz refersh e retorna o tipo do usuário
+  async retornarUsuario(req, res){
     const token = req.params.token;
     let tokenDecodificado;
 
@@ -101,12 +103,9 @@ module.exports = {
       return res.status(200).send({ tipo_usuario: 'Sessão expirada. Efetue login novamente.' })
     }
     const user = await Usuario.findOne({ where: { email: tokenDecodificado.email }, attributes: ['tipo_usuario'] });
-    //valida o usuario no banco a partir do desparo do email verificado
+    //valida o usuário pelo token que ele tem no local storage, se o mesmo for válido
     tokenDecodificado = await generateToken({email: tokenDecodificado.email, tipo_usuario: user.tipo_usuario});
     return res.status(200).send({token: tokenDecodificado, tipo_usuario: user.tipo_usuario});
   },
-
-  async refreshToken(email, tipo_usuario){
-    return await generateToken({email, tipo_usuario});
-  }
+  
 };
