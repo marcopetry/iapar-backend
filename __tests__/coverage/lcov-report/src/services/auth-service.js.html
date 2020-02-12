@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">20.69% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/29</span>
+                <span class='fraction'>6/29</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">20.69% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/29</span>
+                <span class='fraction'>6/29</span>
             </div>
         
             
@@ -127,28 +127,18 @@
 <a name='L68'></a><a href='#L68'>68</a>
 <a name='L69'></a><a href='#L69'>69</a>
 <a name='L70'></a><a href='#L70'>70</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -158,6 +148,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -170,7 +170,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -196,18 +196,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
-const jwt = <span class="cstat-no" title="statement not covered" >require('jsonwebtoken');</span>
+const jwt = require('jsonwebtoken');
 &nbsp;
-<span class="cstat-no" title="statement not covered" >exports.generateToken = <span class="fstat-no" title="function not covered" >as</span>ync (data) =&gt; {</span>
+exports.generateToken = <span class="fstat-no" title="function not covered" >as</span>ync (data) =&gt; {
 <span class="cstat-no" title="statement not covered" >    return await jwt.sign(data, global.SALT_KEY, { expiresIn: '1d' });</span>
 }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >exports.decodeToken = <span class="fstat-no" title="function not covered" >as</span>ync (token) =&gt; {</span>
+exports.decodeToken = <span class="fstat-no" title="function not covered" >as</span>ync (token) =&gt; {
     var data = <span class="cstat-no" title="statement not covered" >await jwt.verify(token, global.SALT_KEY);</span>
 <span class="cstat-no" title="statement not covered" >    return data;</span>
 }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >exports.verificaToken = <span class="fstat-no" title="function not covered" >as</span>ync function (token) {</span>
+exports.verificaToken = <span class="fstat-no" title="function not covered" >as</span>ync function (token) {
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (!token) {</span>
 <span class="cstat-no" title="statement not covered" >        return 'Acesso Restrito';</span>
@@ -219,7 +219,7 @@ const jwt = <span class="cstat-no" title="statement not covered" >require('jsonw
 };
 &nbsp;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >exports.authorize = <span class="fstat-no" title="function not covered" >fu</span>nction (req, res, next) {</span>
+exports.authorize = <span class="fstat-no" title="function not covered" >fu</span>nction (req, res, next) {
     var token = <span class="cstat-no" title="statement not covered" >req.body.token || req.query.token || req.headers['x-access-token'];</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (!token) {</span>
@@ -239,7 +239,7 @@ const jwt = <span class="cstat-no" title="statement not covered" >require('jsonw
     }
 };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >exports.isAdmin = <span class="fstat-no" title="function not covered" >fu</span>nction (req, res, next) {</span>
+exports.isAdmin = <span class="fstat-no" title="function not covered" >fu</span>nction (req, res, next) {
     var token = <span class="cstat-no" title="statement not covered" >req.body.token || req.query.token || req.headers['x-access-token'];</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (!token) {</span>
@@ -271,7 +271,7 @@ const jwt = <span class="cstat-no" title="statement not covered" >require('jsonw
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Tue Feb 11 2020 16:25:56 GMT-0300 (Horário Padrão de Brasília)
+                at Tue Feb 11 2020 21:32:08 GMT-0300 (Horário Padrão de Brasília)
             </div>
         </div>
         <script src="../../prettify.js"></script>

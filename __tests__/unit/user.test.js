@@ -12,12 +12,12 @@ Tecnico.init(connection);
 
 describe('Usuario', () => {
     beforeEach(async () => {
-        Usuario.destroy({ truncate: true, force: true });
-        Tecnico.destroy({ truncate: true, force: true });
+        await Usuario.destroy({ truncate: true, force: true });
+        await Tecnico.destroy({ truncate: true, force: true });
     });
         
     it('Deverá cadastrar novo técnico', async () =>{
-        const newUSer = {
+        const user = await Usuario.create({
             "nome": "Marco",
             "email": "marco@iapar.com",
             "senha": "123456",
@@ -32,8 +32,7 @@ describe('Usuario', () => {
             "ano_formatura": "2020",
             "tipo_registro": "CREA", 
             "registro_profissional": "123456"
-        };
-        const user = await Usuario.create(newUSer);
+        });
         expect(user).not.toBeNull();
     });
 });
