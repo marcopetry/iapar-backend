@@ -52,9 +52,9 @@ module.exports = {
 
       //enviar email de confirmação passa email do cadastrado + token para validar
       enviarEmail.send('marcomattospetry@gmail.com', token);
-      const tecnico = await Builder.construirTipoUsuario(req.body, user.id);
+      const response = await Builder.construirTipoUsuario(req.body, user.id);
       
-      return tecnico ? res.json({resposta: 'Cadastro realizado com sucesso.'}) : res.json({resposta: 'Tente novamente.'})
+      return response ? res.status(200).send({resposta: 'Cadastro realizado com sucesso.'}) : res.status(200).send({resposta: 'Tente novamente.'});
     } 
     else {
       return res.json({resposta: errors});

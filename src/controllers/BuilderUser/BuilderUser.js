@@ -1,12 +1,20 @@
-const ControllerTecnico = require('./ConcreteBuilders/controller-tecnico');
+const Tecnico = require('../../models/Tecnico');
+const Proprietario = require('../../models/Proprietario');
 
 module.exports = {
 
     async construirTipoUsuario(bodyReq, id) {
-        let res;
         switch (bodyReq.tipo_usuario) {
             case 'tecnico':
-                return ControllerTecnico.cadastrarTecnico(bodyReq, id);
+                const { ano_formatura, tipo_registro, registro_profissional } = bodyReq;
+                const tecnico = await Tecnico.create({
+                    id, ano_formatura, tipo_registro, registro_profissional
+                });
+                return tecnico;
+            case 'proprietario':
+                const { cnpj } = bodyReq;
+                const proprietario = await Proprietario.create({id, cnpj});
+                return proprietario;
             default:
                 console.log('Sorry, we are out of ' + expr + '.');
         }
