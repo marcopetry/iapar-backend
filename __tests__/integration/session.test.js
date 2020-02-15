@@ -13,9 +13,9 @@ describe("Cadastrar novos usuários", () => {
   });
 
   beforeEach(async (done) => {
-    await Usuario.destroy({ truncate: true, force: true });
-    await Tecnico.destroy({ truncate: true, force: true });
-    await Proprietario.destroy({truncate: true, force: true});
+    await Usuario.destroy({ truncate: true, force: true, cascade: true });
+    await Tecnico.destroy({ truncate: true, force: true, cascade: true });
+    await Proprietario.destroy({truncate: true, force: true, cascade: true});
     done();
   });
 

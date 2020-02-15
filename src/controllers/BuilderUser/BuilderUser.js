@@ -1,3 +1,4 @@
+const Usuario = require('../../models/Usuario');
 const Tecnico = require('../../models/Tecnico');
 const Proprietario = require('../../models/Proprietario');
 
@@ -7,14 +8,25 @@ module.exports = {
         switch (bodyReq.tipo_usuario) {
             case 'tecnico':
                 const { ano_formatura, tipo_registro, registro_profissional } = bodyReq;
-                const tecnico = await Tecnico.create({
-                    id, ano_formatura, tipo_registro, registro_profissional
-                });
-                return tecnico;
+                try {
+                    const tecnico = await Tecnico.create({
+                        id, ano_formatura, tipo_registro, registro_profissional
+                    });
+                    return tecnico;
+                } catch (e) {
+                    await Usuario.destroy({ where: {id}});
+                    return "Problemas ao cadastrar.";
+                }
             case 'proprietario':
                 const { cnpj } = bodyReq;
-                const proprietario = await Proprietario.create({id, cnpj});
-                return proprietario;
+                try {
+                    const proprietario = await Proprietario.create({id, cnpj});
+                    return proprietario;
+                } catch (e) {
+                    console.log(e);
+                    await Usuario.destroy({ where: {id}});
+                    return "Problemas ao cadastrar.";
+                }
             default:
                 console.log('Sorry, we are out of ' + expr + '.');
         }

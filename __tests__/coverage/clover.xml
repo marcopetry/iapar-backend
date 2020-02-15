@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1581781626669" clover="3.2.0">
-  <project timestamp="1581781626669" name="All files">
-    <metrics statements="168" coveredstatements="87" conditionals="46" coveredconditionals="8" methods="31" coveredmethods="9" elements="245" coveredelements="104" complexity="0" loc="168" ncloc="168" packages="11" files="17" classes="17"/>
+<coverage generated="1581792797702" clover="3.2.0">
+  <project timestamp="1581792797702" name="All files">
+    <metrics statements="179" coveredstatements="91" conditionals="46" coveredconditionals="8" methods="33" coveredmethods="9" elements="258" coveredelements="108" complexity="0" loc="179" ncloc="179" packages="11" files="17" classes="17"/>
     <package name="src">
       <metrics statements="10" coveredstatements="10" conditionals="2" coveredconditionals="1" methods="0" coveredmethods="0"/>
       <file name="server.js" path="/home/marco-petry/Documentos/iapar-backend/src/server.js">
@@ -80,20 +80,28 @@
       </file>
     </package>
     <package name="src.controllers.BuilderUser">
-      <metrics statements="11" coveredstatements="10" conditionals="3" coveredconditionals="2" methods="1" coveredmethods="1"/>
+      <metrics statements="19" coveredstatements="13" conditionals="3" coveredconditionals="2" methods="1" coveredmethods="1"/>
       <file name="BuilderUser.js" path="/home/marco-petry/Documentos/iapar-backend/src/controllers/BuilderUser/BuilderUser.js">
-        <metrics statements="11" coveredstatements="10" conditionals="3" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <metrics statements="19" coveredstatements="13" conditionals="3" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="7" count="2" type="cond" truecount="2" falsecount="1"/>
-        <line num="9" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="8" count="2" type="cond" truecount="2" falsecount="1"/>
         <line num="10" count="1" type="stmt"/>
-        <line num="13" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
         <line num="15" count="1" type="stmt"/>
-        <line num="16" count="1" type="stmt"/>
-        <line num="17" count="1" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.database">
@@ -124,28 +132,31 @@
         <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="3" count="0" type="stmt"/>
         <line num="5" count="0" type="stmt"/>
-        <line num="36" count="0" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
       </file>
       <file name="criar-tabela-proprierario.js" path="/home/marco-petry/Documentos/iapar-backend/src/database/migrations/criar-tabela-proprierario.js">
         <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="3" count="0" type="stmt"/>
         <line num="5" count="0" type="stmt"/>
-        <line num="28" count="0" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.models">
-      <metrics statements="24" coveredstatements="9" conditionals="5" coveredconditionals="0" methods="6" coveredmethods="3"/>
+      <metrics statements="27" coveredstatements="10" conditionals="5" coveredconditionals="0" methods="8" coveredmethods="3"/>
       <file name="Proprietario.js" path="/home/marco-petry/Documentos/iapar-backend/src/models/Proprietario.js">
-        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <metrics statements="5" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
         <line num="1" count="2" type="stmt"/>
-        <line num="5" count="4" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="19" count="2" type="stmt"/>
       </file>
       <file name="Tecnico.js" path="/home/marco-petry/Documentos/iapar-backend/src/models/Tecnico.js">
-        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <metrics statements="4" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
         <line num="1" count="2" type="stmt"/>
         <line num="5" count="4" type="stmt"/>
-        <line num="16" count="2" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="19" count="2" type="stmt"/>
       </file>
       <file name="Usuario.js" path="/home/marco-petry/Documentos/iapar-backend/src/models/Usuario.js">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>

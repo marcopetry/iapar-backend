@@ -8,6 +8,9 @@ module.exports = {
         primaryKey: true,
         allowNull: false,
         autoIncrement: false,
+        references: { model: 'usuarios', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       cnpj: {
         type: Sequelize.STRING,

@@ -11,6 +11,9 @@ class Tecnico extends Model {
             sequelize
         });
     }
+    static associate(models) {
+        this.belongsTo(models.Usuario, { foreignKey: 'id_usuario', as: 'usuario' });
+    }
 }
 
 module.exports = Tecnico;

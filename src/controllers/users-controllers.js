@@ -54,7 +54,7 @@ module.exports = {
       enviarEmail.send('marcomattospetry@gmail.com', token);
       const response = await Builder.construirTipoUsuario(req.body, user.id);
       
-      return response ? res.status(200).send({resposta: 'Cadastro realizado com sucesso.'}) : res.status(200).send({resposta: 'Tente novamente.'});
+      return response !== "Problemas ao cadastrar." ? res.status(200).send({resposta: 'Cadastro realizado com sucesso.'}) : res.status(200).send({resposta: 'Tente novamente.'});
     } 
     else {
       return res.json({resposta: errors});
