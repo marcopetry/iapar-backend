@@ -9,7 +9,7 @@
     "pretest": "NODE_ENV=test sequelize db:migrate",
     "test": "NODE_ENV=test jest",
     "posttest": "NODE_ENV=test sequelize db:migrate:undo:all",
-    "CMtest": "NODE_ENV=test sequelize db:migrate:undo:all"
+    "cleanEnvTest": "NODE_ENV=test sequelize db:migrate:undo:all; killall -9 node"
   },
   "keywords": [],
   "author": "",

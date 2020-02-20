@@ -4,11 +4,16 @@ const dbConfig = require('../config/database');
 const Usuario = require('../models/Usuario');
 const Tecnico = require('../models/Tecnico');
 const Proprietario = require('../models/Proprietario');
+const Propriedade = require('../models/Propriedade');
 
 const connection = new Sequelize(dbConfig);
 
 Usuario.init(connection);
 Tecnico.init(connection);
 Proprietario.init(connection);
+Propriedade.init(connection);
+
+Usuario.associate(connection.models);
+Tecnico.associate(connection.models);
 
 module.exports = connection;

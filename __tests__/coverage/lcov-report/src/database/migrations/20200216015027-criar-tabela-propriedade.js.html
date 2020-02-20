@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/database/migrations/20200107233130-criar-tabela-usuarios.js</title>
+    <title>Code coverage report for src/database/migrations/20200216015027-criar-tabela-propriedade.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/database/migrations</a> 20200107233130-criar-tabela-usuarios.js</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/database/migrations</a> 20200216015027-criar-tabela-propriedade.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -116,55 +116,11 @@
 <a name='L57'></a><a href='#L57'>57</a>
 <a name='L58'></a><a href='#L58'>58</a>
 <a name='L59'></a><a href='#L59'>59</a>
-<a name='L60'></a><a href='#L60'>60</a>
-<a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a>
-<a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a>
-<a name='L71'></a><a href='#L71'>71</a>
-<a name='L72'></a><a href='#L72'>72</a>
-<a name='L73'></a><a href='#L73'>73</a>
-<a name='L74'></a><a href='#L74'>74</a>
-<a name='L75'></a><a href='#L75'>75</a>
-<a name='L76'></a><a href='#L76'>76</a>
-<a name='L77'></a><a href='#L77'>77</a>
-<a name='L78'></a><a href='#L78'>78</a>
-<a name='L79'></a><a href='#L79'>79</a>
-<a name='L80'></a><a href='#L80'>80</a>
-<a name='L81'></a><a href='#L81'>81</a>
-<a name='L82'></a><a href='#L82'>82</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L60'></a><a href='#L60'>60</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -222,83 +178,61 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
 &nbsp;
 <span class="cstat-no" title="statement not covered" >module.exports = {</span>
-  up: <span class="fstat-no" title="function not covered" >(q</span>ueryInterface, Sequelize) =&gt; {
-<span class="cstat-no" title="statement not covered" >    return queryInterface.createTable('usuarios', { </span>
-      id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false,
-      },
-      nome: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      foto: {
-        type: Sequelize.BLOB,
-        allowNull: true
-      },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      cpf: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      cidade: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      rua: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      numero: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      bairro: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      cep: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      telefone: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      senha: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      tipo_usuario: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      verificado: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
-      },
-      created_at: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
-      updated_at: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
-    });
-  },
+    up: <span class="fstat-no" title="function not covered" >(q</span>ueryInterface, Sequelize) =&gt; {
+<span class="cstat-no" title="statement not covered" >        return queryInterface.createTable('propriedades', {</span>
+            id: {
+                type: Sequelize.INTEGER,
+                primaryKey: true, 
+                autoIncrement: true,
+                allowNull: false,
+            },
+            id_proprietario: {
+                type: Sequelize.INTEGER,
+                primaryKey: false,
+                allowNull: false,
+                autoIncrement: false,
+                references: { model: 'proprietarios', key: 'id' },
+                onUpdate: 'CASCADE',
+                onDelete: 'CASCADE',
+            },
+            nome_propriedade: {
+                type: Sequelize.STRING,
+                allowNull: false,
+            },
+            longitude: {
+                type: Sequelize.DOUBLE,
+                allowNull: false
+            },
+            latitude: {
+                type: Sequelize.DOUBLE,
+                allowNull: false,
+            },
+            qtd_pessoas_envolvidas_atividade: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+            },
+            data_inicio_programa: {
+                type: Sequelize.DATE,
+                allowNull: false,
+            },
+            data_proxima_visita: {
+                type: Sequelize.DATE,
+                allowNull: false,
+            },
+            created_at: {
+                type: Sequelize.DATE,
+                allowNull: false,
+            },
+            updated_at: {
+                type: Sequelize.DATE,
+                allowNull: false,
+            },
+        });
+    },
 &nbsp;
-  down: <span class="fstat-no" title="function not covered" >(q</span>ueryInterface, Sequelize) =&gt; {
-<span class="cstat-no" title="statement not covered" >    return queryInterface.dropTable('usuarios');</span>
-  }
+    down: <span class="fstat-no" title="function not covered" >(q</span>ueryInterface, Sequelize) =&gt; {
+<span class="cstat-no" title="statement not covered" >        return queryInterface.dropTable('propriedades');</span>
+    }
 };
 &nbsp;</pre></td></tr></table></pre>
 

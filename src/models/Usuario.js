@@ -20,7 +20,10 @@ class Usuario extends Model {
       sequelize
     })
   }
-
+  static associate(models) {
+    this.hasOne(models.Tecnico, { foreignKey: 'id', as: 'tecnico' });
+  }
+ 
 }
 
 module.exports = Usuario;

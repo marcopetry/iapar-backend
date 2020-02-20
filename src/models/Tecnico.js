@@ -12,7 +12,7 @@ class Tecnico extends Model {
         });
     }
     static associate(models) {
-        this.belongsTo(models.Usuario, { foreignKey: 'id_usuario', as: 'usuario' });
+        this.belongsTo(models.Usuario, { foreignKey: 'id', as: 'usuarios' });
     }
 }
 

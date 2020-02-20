@@ -4,7 +4,6 @@ const Usuario = require('./Usuario');
 class Proprietario extends Model {
     static init(sequelize) {
         super.init({
-            //id_usuario: DataTypes.INTEGER,
             cnpj: DataTypes.STRING,
         }, {
             sequelize
@@ -12,8 +11,8 @@ class Proprietario extends Model {
     }
     static associate(models) {
         this.belongsTo(models.Usuario, { foreignKey: 'id_usuario', as: 'usuario' });
+        this.hasMany(models.Propriedade, { foreignKey: 'propriedade_proprietario', as: 'propriedade_proprietario' });
     }
 }
-//Proprietario.belongsTo(Usuario, {foreignKey: 'id_usuario'});
 
 module.exports = Proprietario;

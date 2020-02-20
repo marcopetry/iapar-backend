@@ -11,7 +11,7 @@ module.exports = {
     return res.status(200).send(users);
   },
 
-  async buscarUsuario( email ) {
+  async buscarUsuario(email) {
     const user = await Usuario.findOne({ where: { email } });
     return res.json(user);
   },
@@ -22,13 +22,13 @@ module.exports = {
     const user = await Usuario.findOne({ where: { email, senha }, attributes: ['tipo_usuario', 'verificado'] });
 
     //aqui precisa ser conferido o tipo do usuário
-    if (!user) return res.status(200).send({tipo_usuario: 'Usuário não encontrado. Cadastre-se ou confira seus dados.'});
-    
-    if(!user.verificado) return res.status(200).send({tipo_usuario: 'Falta validar seu email. Acesse seu email para validar.'});
+    if (!user) return res.status(200).send({ tipo_usuario: 'Usuário não encontrado. Cadastre-se ou confira seus dados.' });
 
-    const token = await generateToken({email, tipo_usuario: user.tipo_usuario});
-    return res.status(200).send({token, tipo_usuario: user.tipo_usuario});
-    
+    if (!user.verificado) return res.status(200).send({ tipo_usuario: 'Falta validar seu email. Acesse seu email para validar.' });
+
+    const token = await generateToken({ email, tipo_usuario: user.tipo_usuario, id: user.id });
+    return res.status(200).send({ token, tipo_usuario: user.tipo_usuario });
+
   },
 
   async cadastrarUsuario(req, res) {
@@ -43,7 +43,7 @@ module.exports = {
     if (errors === true) {
       const user = await Usuario.create({
         nome, email, senha, cpf, cidade,
-        rua, numero, bairro, cep, telefone, 
+        rua, numero, bairro, cep, telefone,
         tipo_usuario
       });
 
@@ -51,61 +51,63 @@ module.exports = {
       const token = await generateToken({ email, tipo_usuario });
 
       //enviar email de confirmação passa email do cadastrado + token para validar
-      enviarEmail.send('marcomattospetry@gmail.com', token);
       const response = await Builder.construirTipoUsuario(req.body, user.id);
-      
-      return response !== "Problemas ao cadastrar." ? res.status(200).send({resposta: 'Cadastro realizado com sucesso.'}) : res.status(200).send({resposta: 'Tente novamente.'});
-    } 
-    else {
-      return res.json({resposta: errors});
-    }
-  }, 
 
-  async validarUsuario(req, res, next){
+      return response !== "Problemas ao cadastrar." ? (
+          //enviarEmail.send('marcomattospetry@gmail.com', token),
+          res.status(200).send({ resposta: 'Cadastro realizado com sucesso.' })) :
+          res.status(200).send({ resposta: 'Tente novamente.' });
+    }
+    else {
+      return res.json({ resposta: errors });
+    }
+  },
+
+  async validarUsuario(req, res, next) {
     const token = req.params.token;
     let tokenDecodificado;
 
     //sempre vem token pois eu valido no front end
     try {
       tokenDecodificado = await decodeToken(token);
-    } catch(e){
+    } catch (e) {
       return res.json({ erro: 'Token inválido' })
     }
-    
+
     //valida o usuario no banco a partir do desparo do email verificado
-    const [, resposta ] = await Usuario.update({verificado: true}, {returning: true, where: {email: tokenDecodificado.email} });
+    const [, resposta] = await Usuario.update({ verificado: true }, { returning: true, where: { email: tokenDecodificado.email } });
     return res.json(resposta[0]);
   },
 
-  async reenviarTokenValidacao(req, res){
+  async reenviarTokenValidacao(req, res) {
     const { email } = req.body;
 
     const user = await Usuario.findOne({ where: { email } });
 
-    if(user){
-      const token = await generateToken({ email, tipo_usuario: user.tipo_usuario });
+    if (user) {
+      const token = await generateToken({ email, tipo_usuario: user.tipo_usuario, id: user.id });
       enviarEmail.send('marcomattospetry@gmail.com', token);
-      return res.json({ message: 'Token reenviado. Acesse seu email para confirmar.'});
+      return res.json({ message: 'Token reenviado. Acesse seu email para confirmar.' });
     } else {
-      return res.json({ message: 'Usuário não encontrado. Digite novamente o email ou faça o cadastro.'});
+      return res.json({ message: 'Usuário não encontrado. Digite novamente o email ou faça o cadastro.' });
     }
 
   },
 
   //valida o token, faz refersh e retorna o tipo do usuário
-  async retornarUsuario(req, res){
+  async retornarUsuario(req, res) {
     const token = req.params.token;
     let tokenDecodificado;
 
     try {
       tokenDecodificado = await decodeToken(token);
-    } catch(e){
+    } catch (e) {
       return res.status(200).send({ tipo_usuario: 'Sessão expirada. Efetue login novamente.' })
     }
     const user = await Usuario.findOne({ where: { email: tokenDecodificado.email }, attributes: ['tipo_usuario'] });
     //valida o usuário pelo token que ele tem no local storage, se o mesmo for válido
-    tokenDecodificado = await generateToken({email: tokenDecodificado.email, tipo_usuario: user.tipo_usuario});
-    return res.status(200).send({token: tokenDecodificado, tipo_usuario: user.tipo_usuario});
+    const tokenAtualizado = await generateToken({ email: tokenDecodificado.email, tipo_usuario: user.tipo_usuario, id: user.id });
+    return res.status(200).send({ token: tokenAtualizado, tipo_usuario: user.tipo_usuario });
   },
-  
+
 };
