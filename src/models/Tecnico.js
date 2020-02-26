@@ -13,6 +13,7 @@ class Tecnico extends Model {
     }
     static associate(models) {
         this.belongsTo(models.Usuario, { foreignKey: 'id', as: 'usuarios' });
+        this.belongsToMany(models.Propriedade, { foreignKey: 'id_tecnico', through: 'propriedade_tecnicos', as: 'propriedades' });
     }
 }
 

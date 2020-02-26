@@ -17,6 +17,7 @@ class Propriedade extends Model {
     }
     static associate(models) {
         this.belongsTo(models.Proprietario, { foreignKey: 'id_proprietario', as: 'dono_propriedade' });
+        this.belongsToMany(models.Tecnico, { foreignKey: 'id_propriedade', through: 'propriedade_tecnicos', as: 'tecnicos' });
     }
 }
 

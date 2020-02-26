@@ -15,5 +15,7 @@ Propriedade.init(connection);
 
 Usuario.associate(connection.models);
 Tecnico.associate(connection.models);
+Proprietario.associate(connection.models);
+Propriedade.associate(connection.models);
 
 module.exports = connection;

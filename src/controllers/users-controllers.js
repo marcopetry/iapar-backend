@@ -55,7 +55,7 @@ module.exports = {
 
       return response !== "Problemas ao cadastrar." ? (
           //enviarEmail.send('marcomattospetry@gmail.com', token),
-          res.status(200).send({ resposta: 'Cadastro realizado com sucesso.' })) :
+          res.status(200).send({ resposta: 'Cadastro realizado com sucesso.', id: user.id })) :
           res.status(200).send({ resposta: 'Tente novamente.' });
     }
     else {
@@ -104,10 +104,15 @@ module.exports = {
     } catch (e) {
       return res.status(200).send({ tipo_usuario: 'Sessão expirada. Efetue login novamente.' })
     }
+    
     const user = await Usuario.findOne({ where: { email: tokenDecodificado.email }, attributes: ['tipo_usuario'] });
     //valida o usuário pelo token que ele tem no local storage, se o mesmo for válido
-    const tokenAtualizado = await generateToken({ email: tokenDecodificado.email, tipo_usuario: user.tipo_usuario, id: user.id });
-    return res.status(200).send({ token: tokenAtualizado, tipo_usuario: user.tipo_usuario });
+    if(user){
+      const tokenAtualizado = await generateToken({ email: tokenDecodificado.email, tipo_usuario: user.tipo_usuario, id: user.id });
+      return res.status(200).send({ token: tokenAtualizado, tipo_usuario: user.tipo_usuario });
+    } else {
+      return res.status(200).send({ tipo_usuario: 'Sessão expirada. Efetue login novamente.'})
+    }
   },
 
 };
