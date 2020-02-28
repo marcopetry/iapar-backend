@@ -19,7 +19,7 @@ module.exports = {
   async logar(req, res) {
     const email = req.body.email;
     const senha = req.body.senha;
-    const user = await Usuario.findOne({ where: { email, senha }, attributes: ['tipo_usuario', 'verificado'] });
+    const user = await Usuario.findOne({ where: { email, senha }, attributes: ['tipo_usuario', 'verificado', 'id'] });
 
     //aqui precisa ser conferido o tipo do usuário
     if (!user) return res.status(200).send({ tipo_usuario: 'Usuário não encontrado. Cadastre-se ou confira seus dados.' });
@@ -48,7 +48,7 @@ module.exports = {
       });
 
       //gera token para validar cadastro
-      const token = await generateToken({ email, tipo_usuario });
+      const token = await generateToken({ email, tipo_usuario, id: user.id });
 
       //enviar email de confirmação passa email do cadastrado + token para validar
       const response = await Builder.construirTipoUsuario(req.body, user.id);
@@ -94,7 +94,7 @@ module.exports = {
 
   },
 
-  //valida o token, faz refersh e retorna o tipo do usuário
+  //valida o token, faz refersh e retorna o tipo do usuário  
   async retornarUsuario(req, res) {
     const token = req.params.token;
     let tokenDecodificado;

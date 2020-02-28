@@ -1,5 +1,4 @@
 const { Model, DataTypes } = require('sequelize');
-const Usuario = require('./Usuario');
 
 class Proprietario extends Model {
     static init(sequelize) {

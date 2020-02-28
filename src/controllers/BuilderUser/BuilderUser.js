@@ -12,7 +12,6 @@ module.exports = {
                     const tecnico = await Tecnico.create({
                         id, ano_formatura, tipo_registro, registro_profissional
                     });
-                    //Tecnico.associate(Usuario);
                     return tecnico;
                 } catch (e) {
                     console.log(e);
