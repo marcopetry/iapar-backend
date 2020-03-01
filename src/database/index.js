@@ -6,6 +6,7 @@ const Tecnico = require('../models/Tecnico');
 const Proprietario = require('../models/Proprietario');
 const Propriedade = require('../models/Propriedade');
 const PropriedadeTecnico = require('../models/PropriedadeTecnico');
+const InfoPropriedade = require('../models/InfoPropriedade');
 
 const connection = new Sequelize(dbConfig);
 
@@ -14,11 +15,13 @@ Tecnico.init(connection);
 Proprietario.init(connection);
 Propriedade.init(connection);
 PropriedadeTecnico.init(connection);
+InfoPropriedade.init(connection);
 
 Usuario.associate(connection.models);
 Tecnico.associate(connection.models);
 Proprietario.associate(connection.models);
 Propriedade.associate(connection.models);
-//PropriedadeTecnico.associate(connection.models);
+PropriedadeTecnico.associate(connection.models);
+InfoPropriedade.associate(connection.models);
 
 module.exports = connection;

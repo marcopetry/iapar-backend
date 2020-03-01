@@ -2,19 +2,11 @@ const Usuario = require('../models/Usuario');
 const decoder = require('../services/auth-service');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
+const JWT = require('../services/auth-service');
 
 module.exports = {
     async retornarTecnicos(req, res) {
-        const token = req.headers['x-access-token'];
-
-        if (!token) {
-            return res.status(401).json({
-                message: 'Token Inválido'
-            });
-        }
-
-        try {
-            const tokenDecodificado = await decoder.decodeToken(token);
+        JWT.authorize(req, res, async tokenDecodificado => {
             try {
                 const response = await Usuario.findAll({
                     attributes: ['id', 'nome', 'email', 'cidade', 'telefone'],
@@ -32,12 +24,7 @@ module.exports = {
                 console.log(e);
                 return res.status(200).send({ message: 'Problema no carregamento' });
             }
-        } catch (e) {
-            console.log(e);
-            return res.status(401).json({
-                message: 'Token Inválido'
-            });
-        }
+        });
     }
 }
 

@@ -7,3 +7,9 @@ exports.retornarIDPropriedadeTecnico = async (id_tecnico, id_propriedade) => {
     });
     return id;
 }
+
+exports.retornarPropriedadeTecnico = async id => {
+    const propriedadeTecnico = await PropriedadeTecnico.findByPk(id);
+    //console.log(propriedadeTecnico);
+    return propriedadeTecnico.dataValues;
+}

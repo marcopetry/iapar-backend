@@ -1,7 +1,7 @@
 'use strict';
 const jwt = require('jsonwebtoken');
 
-exports.generateToken = async (data) => {
+exports.generateToken = async data => {
     return await jwt.sign(data, global.SALT_KEY, { expiresIn: '1d' });
 }
 
@@ -23,20 +23,20 @@ exports.verificaToken = async function (token) {
 
 
 exports.authorize = function (req, res, next) {
-    var token = req.body.token || req.query.token || req.headers['x-access-token'];
+    var token = req.body.token || req.query.token || req.headers['x-access-token'] || req.params.token;
 
     if (!token) {
-        res.status(401).json({
+        res.status(401).send({
             message: 'Acesso Restrito'
         });
     } else {
         jwt.verify(token, global.SALT_KEY, function (error, decoded) {
             if (error) {
-                res.status(401).json({
+                res.status(401).send({
                     message: 'Token Inválido'
                 });
             } else {
-                next();
+                next(decoded);
             }
         });
     }

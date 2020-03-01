@@ -7,7 +7,10 @@ class PropriedadeTecnico extends Model {
             id_propriedade: DataTypes.INTEGER
         }, {
             sequelize
-        })
+        });
+    }
+    static associate(models){
+        this.hasMany(models.InfoPropriedade, { foreignKey: 'id_propriedade_tecnico', as: 'info_propriedade' });
     }
 }
 

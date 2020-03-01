@@ -30,10 +30,6 @@ module.exports = {
                 type: Sequelize.DOUBLE,
                 allowNull: false,
             },
-            qtd_pessoas_envolvidas_atividade: {
-                type: Sequelize.INTEGER,
-                allowNull: false,
-            },
             data_inicio_programa: {
                 type: Sequelize.DATE,
                 allowNull: false,

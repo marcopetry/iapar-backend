@@ -20,6 +20,7 @@ class Usuario extends Model {
       sequelize
     })
   }
+  //uso essa associação pra trazer os dados mais organizados pro front-end
   static associate(models) {
     this.hasOne(models.Tecnico, { foreignKey: 'id', as: 'tecnico' });
   }

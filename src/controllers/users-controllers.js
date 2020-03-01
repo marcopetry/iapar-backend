@@ -5,30 +5,21 @@ const Builder = require('./BuilderUser/BuilderUser');
 const { generateToken, decodeToken, verificaToken } = require('../services/auth-service');
 
 module.exports = {
-  async index(req, res) {
-    const users = await Usuario.findAll();
-
-    return res.status(200).send(users);
-  },
-
-  async buscarUsuario(email) {
-    const user = await Usuario.findOne({ where: { email } });
-    return res.json(user);
-  },
-
   async logar(req, res) {
     const email = req.body.email;
     const senha = req.body.senha;
     const user = await Usuario.findOne({ where: { email, senha }, attributes: ['tipo_usuario', 'verificado', 'id'] });
 
     //aqui precisa ser conferido o tipo do usuário
-    if (!user) return res.status(200).send({ tipo_usuario: 'Usuário não encontrado. Cadastre-se ou confira seus dados.' });
+    if (!user)
+      return res.status(200).send({ tipo_usuario: 'Usuário não encontrado. Cadastre-se ou confira seus dados.' });
 
-    if (!user.verificado) return res.status(200).send({ tipo_usuario: 'Falta validar seu email. Acesse seu email para validar.' });
+    if (!user.verificado) 
+      return res.status(200).send({ tipo_usuario: 'Falta validar seu email. Acesse seu email para validar.' });
 
     const token = await generateToken({ email, tipo_usuario: user.tipo_usuario, id: user.id });
+    
     return res.status(200).send({ token, tipo_usuario: user.tipo_usuario });
-
   },
 
   async cadastrarUsuario(req, res) {
@@ -54,9 +45,9 @@ module.exports = {
       const response = await Builder.construirTipoUsuario(req.body, user.id);
 
       return response !== "Problemas ao cadastrar." ? (
-          //enviarEmail.send('marcomattospetry@gmail.com', token),
-          res.status(200).send({ resposta: 'Cadastro realizado com sucesso.', id: user.id })) :
-          res.status(200).send({ resposta: 'Tente novamente.' });
+        //enviarEmail.send('marcomattospetry@gmail.com', token),
+        res.status(200).send({ resposta: 'Cadastro realizado com sucesso.', id: user.id })) :
+        res.status(200).send({ resposta: 'Tente novamente.' });
     }
     else {
       return res.json({ resposta: errors });
@@ -73,7 +64,6 @@ module.exports = {
     } catch (e) {
       return res.json({ erro: 'Token inválido' })
     }
-
     //valida o usuario no banco a partir do desparo do email verificado
     const [, resposta] = await Usuario.update({ verificado: true }, { returning: true, where: { email: tokenDecodificado.email } });
     return res.json(resposta[0]);
@@ -104,14 +94,14 @@ module.exports = {
     } catch (e) {
       return res.status(200).send({ tipo_usuario: 'Sessão expirada. Efetue login novamente.' })
     }
-    
-    const user = await Usuario.findOne({ where: { email: tokenDecodificado.email }, attributes: ['tipo_usuario'] });
+
+    const user = await Usuario.findOne({ where: { email: tokenDecodificado.email }, attributes: ['tipo_usuario', 'id'] });
     //valida o usuário pelo token que ele tem no local storage, se o mesmo for válido
-    if(user){
+    if (user) {
       const tokenAtualizado = await generateToken({ email: tokenDecodificado.email, tipo_usuario: user.tipo_usuario, id: user.id });
       return res.status(200).send({ token: tokenAtualizado, tipo_usuario: user.tipo_usuario });
     } else {
-      return res.status(200).send({ tipo_usuario: 'Sessão expirada. Efetue login novamente.'})
+      return res.status(200).send({ tipo_usuario: 'Sessão expirada. Efetue login novamente.' })
     }
   },
 
