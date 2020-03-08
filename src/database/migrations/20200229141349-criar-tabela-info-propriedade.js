@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -7,7 +7,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-        allowNull: false,
+        allowNull: false
       },
       id_propriedade_tecnico: {
         type: Sequelize.INTEGER,
@@ -16,11 +16,11 @@ module.exports = {
         autoIncrement: false,
         references: { model: 'propriedade_tecnicos', key: 'id' },
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       data_insercao: {
-        type: Sequelize.DATE,
-        allowNull: false,
+        type: Sequelize.DATEONLY,
+        allowNull: false
       },
       area_total: {
         type: Sequelize.DOUBLE,
@@ -28,52 +28,52 @@ module.exports = {
       },
       total_terra_arrendada: {
         type: Sequelize.DOUBLE,
-        allowNull: false,
+        allowNull: false
       },
       area_bovinucultura: {
         type: Sequelize.DOUBLE,
-        allowNull: false,
+        allowNull: false
       },
       area_pasto_perene: {
         type: Sequelize.DOUBLE,
-        allowNull: false,
+        allowNull: false
       },
       area_lavoura_verao: {
         type: Sequelize.DOUBLE,
-        allowNull: false,
+        allowNull: false
       },
       area_lavoura_inverno: {
         type: Sequelize.DOUBLE,
-        allowNull: false,
+        allowNull: false
       },
       preco_medio_terra_nua: {
         type: Sequelize.DOUBLE,
-        allowNull: false,
+        allowNull: false
       },
       preco_medio_arrendamento: {
         type: Sequelize.DOUBLE,
-        allowNull: false,
+        allowNull: false
       },
       mapa_uso_solo: {
         type: Sequelize.BLOB,
-        allowNull: true,
+        allowNull: true
       },
       qtd_pessoas_envolvidas_atividade: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: false
       },
       created_at: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: false
       },
       updated_at: {
         type: Sequelize.DATE,
-        allowNull: false,
-      },
-    });
+        allowNull: false
+      }
+    })
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('info_propriedades');
+    return queryInterface.dropTable('info_propriedades')
   }
-};
+}
