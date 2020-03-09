@@ -1,10 +1,14 @@
+const Usuario = require('../models/Usuario')
 const Propriedade = require('../models/Propriedade')
+const Proprietario = require('../models/Proprietario')
 const Tecnico = require('../models/Tecnico')
 const PropriedadeTecnico = require('../models/PropriedadeTecnico')
 const converterStringEmData = require('../utils/conversorStringData')
 const UtilPropriedadeTecnico = require('../utils/retornarIDPropriedadeTecnico')
 const JWT = require('../services/auth-service')
 const InfoPropriedade = require('../models/InfoPropriedade')
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 
 module.exports = {
   /*
@@ -105,6 +109,66 @@ module.exports = {
       } else {
         res.status(200).send({ message: 'Problemas ao buscar dados.' })
       }
+    })
+  },
+
+  async buscarTodasPropriedadesSobSuaResponsabilidade(req, res) {
+    JWT.authorize(req, res, async tokenDecodificado => {
+      if (tokenDecodificado.tipo_usuario === 'tecnico') {
+        const idPropriedadesTecnico = await PropriedadeTecnico.findAll({
+          where: {
+            id_tecnico: tokenDecodificado.id
+          },
+          attributes: ['id_propriedade']
+        })
+        let ids = []
+        idPropriedadesTecnico.map(id => ids.push(id.id_propriedade))
+        //console.log(ids)
+        //return res.send({ ids })
+        let propriedades = []
+        const promisses = ids.map(async id => {
+          const response = await Propriedade.findAll({
+            where: {
+              id
+            },
+            include: [
+              {
+                association: 'dono_propriedade',
+                attributes: ['cnpj'],
+                include: {
+                  association: 'usuario'
+                }
+              },
+              {
+                association: 'tecnicos',
+                through: 'propriedade_tecnicos'
+              }
+            ]
+          })
+          propriedades.push(response)
+        })
+        await Promise.all(promisses)
+        if (!propriedades) return res.status(200).send({ message: 'Problemas no carregamento.' })
+        return res.status(200).send(propriedades)
+      }
+      /* 
+      if (tokenDecodificado.tipo_usuario === 'proprietario') {
+        const response = await Propriedade.findAll({
+          attributes: [
+            'id',
+            'id_proprietario',
+            'nome_propriedade',
+            'longitude',
+            'latitude',
+            'data_inicio_programa',
+            'data_proxima_visita'
+          ],
+          where: {}
+        })
+
+        if (!response) return res.status(200).send({ message: 'Problemas no carregamento.' })
+        return res.status(200).send(promisses)
+      } */
     })
   }
 }

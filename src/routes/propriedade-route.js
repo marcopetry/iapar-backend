@@ -4,6 +4,7 @@ const routes = express.Router()
 const PropriedadeController = require('../controllers/propriedade-controller')
 
 routes.post('/propriedade', PropriedadeController.cadastrarPropriedade)
+routes.get('/propriedade', PropriedadeController.buscarTodasPropriedadesSobSuaResponsabilidade)
 routes.post('/info-propriedade', PropriedadeController.cadastrarInfoPropriedade)
 routes.get('/info-propriedade/:id_propriedade_tecnico', PropriedadeController.buscarInformcacoesPropriedade)
 
