@@ -95,7 +95,7 @@ module.exports = {
         return res.status(200).send({ info_propriedade })
       } catch (e) {
         console.log(e)
-        return res.status(200).send({ message: 'Problema ao cadastrar.' })
+        return res.status(200).send({ message: 'Problemas ao cadastrar propriedade.' })
       }
     })
   },
@@ -128,6 +128,7 @@ module.exports = {
         let propriedades = []
         const promisses = ids.map(async id => {
           const response = await Propriedade.findAll({
+            attributes: ['id', 'nome_propriedade', 'data_proxima_visita'],
             where: {
               id
             },
@@ -136,13 +137,17 @@ module.exports = {
                 association: 'dono_propriedade',
                 attributes: ['cnpj'],
                 include: {
-                  association: 'usuario'
+                  association: 'usuario',
+                  attributes: ['nome', 'email', 'telefone', 'cidade']
                 }
-              },
-              {
-                association: 'tecnicos',
-                through: 'propriedade_tecnicos'
               }
+              /* {
+                association: 'tecnicos',
+                through: 'propriedade_tecnicos',
+                include: {
+                  association: 'usuarios'
+                }
+              } */
             ]
           })
           propriedades.push(response)
