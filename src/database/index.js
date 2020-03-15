@@ -8,7 +8,7 @@ const Propriedade = require('../models/Propriedade')
 const PropriedadeTecnico = require('../models/PropriedadeTecnico')
 const InfoPropriedade = require('../models/InfoPropriedade')
 const Folhagem = require('../models/Forragem')
-const TerraFolhagem = require('../models/TerraForragem')
+const TerraForragem = require('../models/TerraForragem')
 
 const connection = new Sequelize(dbConfig)
 
@@ -19,7 +19,7 @@ Propriedade.init(connection)
 PropriedadeTecnico.init(connection)
 InfoPropriedade.init(connection)
 Folhagem.init(connection)
-TerraFolhagem.init(connection)
+TerraForragem.init(connection)
 
 Usuario.associate(connection.models)
 Tecnico.associate(connection.models)
@@ -27,5 +27,6 @@ Proprietario.associate(connection.models)
 Propriedade.associate(connection.models)
 PropriedadeTecnico.associate(connection.models)
 InfoPropriedade.associate(connection.models)
+TerraForragem.associate(connection.models)
 
 module.exports = connection
