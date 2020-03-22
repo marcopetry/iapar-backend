@@ -31,5 +31,17 @@ module.exports = {
       })
       terraForragem ? res.status(200).send(terraForragem) : res.status(200).send({ message: 'Problema ao cadastrar' })
     })
+  },
+
+  async retornarFerragensCadastradas(req, res) {
+    JWT.authorize(req, res, async () => {
+      try {
+        const response = await Forragen.findAll()
+        response ? res.status(200).send(response) : res.status(200).send({ message: 'Problemas no carregamento.' })
+      } catch (e) {
+        console.log(e)
+        response.status(200).send({ erro: e })
+      }
+    })
   }
 }

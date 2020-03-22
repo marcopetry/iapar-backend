@@ -118,19 +118,26 @@ module.exports = {
         const idPropriedadesTecnico = await PropriedadeTecnico.findAll({
           where: {
             id_tecnico: tokenDecodificado.id
-          },
-          attributes: ['id_propriedade']
+          }
+          //attributes: ['id_propriedade', 'id']
         })
+
         let ids = []
-        idPropriedadesTecnico.map(id => ids.push(id.id_propriedade))
-        //console.log(ids)
-        //return res.send({ ids })
+        idPropriedadesTecnico.forEach(element => {
+          ids.push({
+            id: element.id,
+            id_propriedade: element.id_propriedade
+          })
+        })
+        console.log(ids)
+        //return res.status(200)
         let propriedades = []
         const promisses = ids.map(async id => {
+          console.log(id)
           const response = await Propriedade.findAll({
             attributes: ['id', 'nome_propriedade', 'data_proxima_visita'],
             where: {
-              id
+              id: id.id_propriedade
             },
             include: [
               {
@@ -143,14 +150,18 @@ module.exports = {
               }
               /* {
                 association: 'tecnicos',
-                through: 'propriedade_tecnicos',
+                through: 'propriedade_tecnicos'
                 include: {
                   association: 'usuarios'
                 }
               } */
             ]
           })
-          propriedades.push(response)
+          const [propriedade] = response
+          propriedades.push({
+            id_propriedade_tecnico: id.id,
+            propriedade
+          })
         })
         await Promise.all(promisses)
         if (!propriedades) return res.status(200).send({ message: 'Problemas no carregamento.' })
