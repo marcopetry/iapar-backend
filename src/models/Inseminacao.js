@@ -14,8 +14,8 @@ class Inseminacao extends Model {
     )
   }
   static associate(models) {
-    this.belongsTo(models.Animal, { foreignKey: 'id_vaca', as: 'vaca' })
-    this.belongsTo(models.Animal, { foreignKey: 'id_touro', as: 'touro' })
+    this.belongsTo(models.Animais, { foreignKey: 'id_vaca', as: 'vaca' })
+    this.belongsTo(models.Animais, { foreignKey: 'id_touro', as: 'touro' })
   }
 }
 

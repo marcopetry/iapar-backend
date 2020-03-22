@@ -129,11 +129,8 @@ module.exports = {
             id_propriedade: element.id_propriedade
           })
         })
-        console.log(ids)
-        //return res.status(200)
         let propriedades = []
         const promisses = ids.map(async id => {
-          console.log(id)
           const response = await Propriedade.findAll({
             attributes: ['id', 'nome_propriedade', 'data_proxima_visita'],
             where: {

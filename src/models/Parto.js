@@ -16,8 +16,8 @@ class Parto extends Model {
     )
   }
   static associate(models) {
-    this.belongsTo(models.Animal, { foreignKey: 'id_mae', as: 'mae' })
-    this.belongsTo(models.Animal, { foreignKey: 'id_bezerro', as: 'filhote' })
+    this.belongsTo(models.Animais, { foreignKey: 'id_mae', as: 'mae' })
+    this.belongsTo(models.Animais, { foreignKey: 'id_bezerro', as: 'filhote' })
   }
 }
 

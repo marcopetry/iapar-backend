@@ -3,6 +3,7 @@ const userRoutes = require('./routes/users-route')
 const propriedadeRoutes = require('./routes/propriedade-route')
 const tecnicosRoutes = require('./routes/tecnicos-route')
 const inventarioRoutes = require('./routes/inventario-route')
+const inclusoesRapidasRoutes = require('./routes/inclusoes-rapidas-routes')
 const cors = require('cors')
 
 require('./database')
@@ -15,6 +16,7 @@ app.use(userRoutes)
 app.use(propriedadeRoutes)
 app.use(tecnicosRoutes)
 app.use(inventarioRoutes)
+app.use(inclusoesRapidasRoutes)
 
 app.listen(process.env.PORT || 3333)
 

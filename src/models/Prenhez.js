@@ -14,7 +14,7 @@ class Prenhez extends Model {
     )
   }
   static associate(models) {
-    this.belongsTo(models.Animal, { foreignKey: 'id_animal', as: 'animal' })
+    this.belongsTo(models.Animais, { foreignKey: 'id_animal', as: 'animal' })
     this.belongsTo(models.Inseminacao, { foreignKey: 'id_inseminacao', as: 'inseminacao' })
   }
 }

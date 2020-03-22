@@ -16,7 +16,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      identificao_animal: {
+      identificacao_animal: {
         type: Sequelize.STRING,
         allowNull: false
       },
