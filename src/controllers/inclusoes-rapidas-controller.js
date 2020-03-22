@@ -1,6 +1,8 @@
 const AnimalController = require('./ModelsControllers/AnimaisController')
 const PartoController = require('./ModelsControllers/PartoController')
 const InseminacaoController = require('./ModelsControllers/InseminacoesControllers')
+const PrenhezController = require('./ModelsControllers/PrenhezController')
+const MastiteController = require('./ModelsControllers/MastiteControllers')
 const JWT = require('../services/auth-service')
 
 function resHTTP(req, res, ControllerCadastrar) {
@@ -21,5 +23,13 @@ module.exports = {
 
   async cadastrarInseminacao(req, res) {
     resHTTP(req, res, InseminacaoController)
+  },
+
+  async cadastrarPrenhez(req, res) {
+    resHTTP(req, res, PrenhezController)
+  },
+
+  async cadastrarMastite(req, res) {
+    resHTTP(req, res, MastiteController)
   }
 }
