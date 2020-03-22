@@ -1,24 +1,20 @@
-const Animais = require('../models/Animal')
-
+const AnimalController = require('./ModelsControllers/AnimaisController')
+const PartoController = require('./ModelsControllers/PartoController')
 const JWT = require('../services/auth-service')
 
-const util = require('../utils/verificaUsuarioTemAcessoPropriedade')
+function resHTTP(req, res, ControllerCadastrar) {
+  JWT.authorizeProperty(req, res, async () => {
+    const response = await ControllerCadastrar.store(req)
+    return response ? res.status(201).send(response) : res.status(400).send({ message: 'Problemas ao cadastrar.' })
+  })
+}
+
 module.exports = {
   async cadastrarAnimal(req, res) {
-    JWT.authorize(req, res, async tokenDecodificado => {
-      const id_propriedade = req.params.id_propriedade
-      if (util.verificaUsuarioTemAcessoPropriedade(tokenDecodificado, id_propriedade)) {
-        const { identificacao_animal, sexo, peso, raca, status } = req.body
-        try {
-          const response = await Animais.create({ identificacao_animal, sexo, peso, raca, status, id_propriedade })
-          res.status(201).send(response)
-        } catch (e) {
-          console.log('animal ', e)
-          res.status(400).send({ message: 'Problemas ao cadastrar.' })
-        }
-      } else {
-        res.status(401).send({ message: 'Você não pode editar nessa propriedade' })
-      }
-    })
+    resHTTP(req, res, AnimalController)
+  },
+
+  async cadastrarPartos(req, res) {
+    resHTTP(req, res, PartoController)
   }
 }

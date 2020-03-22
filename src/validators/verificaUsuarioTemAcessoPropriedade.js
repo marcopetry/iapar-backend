@@ -18,7 +18,6 @@ exports.verificaUsuarioTemAcessoPropriedade = async function(tokenDecodificado, 
         })
         return !!response
       } catch (error) {
-        console.log('erro tecnico', error)
         return false
       }
     }
