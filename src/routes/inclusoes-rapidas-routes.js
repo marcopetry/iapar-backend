@@ -5,5 +5,6 @@ const InclusoesRapidasController = require('../controllers/inclusoes-rapidas-con
 
 routes.post('/animal/:id_propriedade/novo', InclusoesRapidasController.cadastrarAnimal)
 routes.post('/parto/:id_propriedade/novo', InclusoesRapidasController.cadastrarPartos)
+routes.post('/inseminacao/:id_propriedade/novo', InclusoesRapidasController.cadastrarInseminacao)
 
 module.exports = routes

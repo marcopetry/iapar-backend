@@ -12,7 +12,7 @@ const TerraForragem = require('../models/TerraForragem')
 
 const Animal = require('../models/Animal')
 const Parto = require('../models/Parto')
-const Inseminacao = require('../models/Inseminacao')
+const Inseminacao = require('../models/Inseminacoes')
 const Prenhez = require('../models/Prenhez')
 const Mastite = require('../models/Mastite')
 const Tratamento = require('../models/Tratamento')
