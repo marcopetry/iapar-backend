@@ -1,8 +1,11 @@
-const AnimalController = require('./ModelsControllers/AnimaisController')
-const PartoController = require('./ModelsControllers/PartoController')
+const AnimalController = require('./ModelsControllers/AnimaisControllers')
+const PartoController = require('./ModelsControllers/PartosControllers')
 const InseminacaoController = require('./ModelsControllers/InseminacoesControllers')
-const PrenhezController = require('./ModelsControllers/PrenhezController')
-const MastiteController = require('./ModelsControllers/MastiteControllers')
+const PrenhezController = require('./ModelsControllers/PrenhezControllers')
+const MastiteController = require('./ModelsControllers/MastitesControllers')
+const CompraAnimalController = require('./ModelsControllers/ComprasAnimaisControllers')
+const VendaAnimalController = require('./ModelsControllers/VendasAnimaisControllers')
+
 const JWT = require('../services/auth-service')
 
 function resHTTP(req, res, ControllerCadastrar) {
@@ -31,5 +34,29 @@ module.exports = {
 
   async cadastrarMastite(req, res) {
     resHTTP(req, res, MastiteController)
+  },
+
+  async cadastrarCompraAnimal(req, res) {
+    const cadastroAnimal = await AnimalController.store(req)
+    if (!cadastroAnimal) {
+      return res.status(500).send({ message: 'Problemas ao cadastrar.' })
+    }
+    const newDates = {
+      ...req,
+      body: {
+        ...req.body,
+        id_animal: cadastroAnimal.id
+      }
+    }
+    resHTTP(newDates, res, CompraAnimalController)
+  },
+
+  async cadastrarVendaAnimal(req, res) {
+    const { id_animal } = req.body
+    const updateAnimalVendido = await AnimalController.updateVendido(id_animal)
+    if (!updateAnimalVendido) {
+      return res.status(400).send({ message: 'Problemas ao cadastrar update.', update: updateAnimalVendido })
+    }
+    resHTTP(req, res, VendaAnimalController)
   }
 }

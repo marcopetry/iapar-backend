@@ -22,5 +22,14 @@ module.exports = {
     } catch (error) {
       return false
     }
+  },
+
+  async updateVendido(id) {
+    try {
+      const [, response] = await Animais.update({ status: 'Vendido' }, { returning: true, where: { id } })
+      return response
+    } catch (e) {
+      return false
+    }
   }
 }

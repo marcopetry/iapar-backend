@@ -8,5 +8,7 @@ routes.post('/parto/:id_propriedade/novo', InclusoesRapidasController.cadastrarP
 routes.post('/inseminacao/:id_propriedade/novo', InclusoesRapidasController.cadastrarInseminacao)
 //prenhez
 routes.post('/mastite/:id_propriedade/novo', InclusoesRapidasController.cadastrarMastite)
+routes.post('/compra/:id_propriedade/novo', InclusoesRapidasController.cadastrarCompraAnimal)
+routes.post('/venda/:id_propriedade/novo', InclusoesRapidasController.cadastrarVendaAnimal)
 
 module.exports = routes
