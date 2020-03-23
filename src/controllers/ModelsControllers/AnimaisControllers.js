@@ -24,9 +24,9 @@ module.exports = {
     }
   },
 
-  async updateVendido(id) {
+  async update(id, datesUpdates) {
     try {
-      const [, response] = await Animais.update({ status: 'Vendido' }, { returning: true, where: { id } })
+      const [, response] = await Animais.update(datesUpdates, { returning: true, where: { id } })
       return response
     } catch (e) {
       return false

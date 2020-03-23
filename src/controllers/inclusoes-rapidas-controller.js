@@ -5,11 +5,13 @@ const PrenhezController = require('./ModelsControllers/PrenhezControllers')
 const MastiteController = require('./ModelsControllers/MastitesControllers')
 const CompraAnimalController = require('./ModelsControllers/ComprasAnimaisControllers')
 const VendaAnimalController = require('./ModelsControllers/VendasAnimaisControllers')
+const MortesAnimalController = require('./ModelsControllers/MortesControllers')
 
 const JWT = require('../services/auth-service')
 
-function resHTTP(req, res, ControllerCadastrar) {
+function resHTTP(req, res, ControllerCadastrar, executeFuncion) {
   JWT.authorizeProperty(req, res, async () => {
+    executeFuncion()
     const response = await ControllerCadastrar.store(req)
     return response ? res.status(201).send(response) : res.status(400).send({ message: 'Problemas ao cadastrar.' })
   })
@@ -52,11 +54,24 @@ module.exports = {
   },
 
   async cadastrarVendaAnimal(req, res) {
-    const { id_animal } = req.body
-    const updateAnimalVendido = await AnimalController.updateVendido(id_animal)
-    if (!updateAnimalVendido) {
-      return res.status(400).send({ message: 'Problemas ao cadastrar update.', update: updateAnimalVendido })
+    const execute = async () => {
+      const { id_animal } = req.body
+      const updateAnimalVendido = await AnimalController.update(id_animal, { status: 'Vendido' })
+      if (!updateAnimalVendido) {
+        return res.status(400).send({ message: 'Problemas ao cadastrar.', update: updateAnimalVendido })
+      }
     }
-    resHTTP(req, res, VendaAnimalController)
+    resHTTP(req, res, VendaAnimalController, execute)
+  },
+
+  async cadastrarMorteAnimal(req, res) {
+    const execute = async () => {
+      const { id_animal } = req.body
+      const updateAnimalVendido = await AnimalController.update(id_animal, { status: 'Morto' })
+      if (!updateAnimalVendido) {
+        return res.status(400).send({ message: 'Problemas ao cadastrar.', update: updateAnimalVendido })
+      }
+    }
+    resHTTP(req, res, MortesAnimalController, execute)
   }
 }
