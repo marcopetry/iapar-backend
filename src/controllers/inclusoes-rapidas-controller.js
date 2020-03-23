@@ -6,6 +6,7 @@ const MastiteController = require('./ModelsControllers/MastitesControllers')
 const CompraAnimalController = require('./ModelsControllers/ComprasAnimaisControllers')
 const VendaAnimalController = require('./ModelsControllers/VendasAnimaisControllers')
 const MortesAnimalController = require('./ModelsControllers/MortesControllers')
+const DoencasController = require('./ModelsControllers/DoencasControllers')
 
 const JWT = require('../services/auth-service')
 
@@ -56,9 +57,9 @@ module.exports = {
   async cadastrarVendaAnimal(req, res) {
     const execute = async () => {
       const { id_animal } = req.body
-      const updateAnimalVendido = await AnimalController.update(id_animal, { status: 'Vendido' })
-      if (!updateAnimalVendido) {
-        return res.status(400).send({ message: 'Problemas ao cadastrar.', update: updateAnimalVendido })
+      const updateAnimal = await AnimalController.update(id_animal, { status: 'Vendido' })
+      if (!updateAnimal) {
+        return res.status(400).send({ message: 'Problemas ao cadastrar.' })
       }
     }
     resHTTP(req, res, VendaAnimalController, execute)
@@ -67,11 +68,22 @@ module.exports = {
   async cadastrarMorteAnimal(req, res) {
     const execute = async () => {
       const { id_animal } = req.body
-      const updateAnimalVendido = await AnimalController.update(id_animal, { status: 'Morto' })
-      if (!updateAnimalVendido) {
-        return res.status(400).send({ message: 'Problemas ao cadastrar.', update: updateAnimalVendido })
+      const updateAnimal = await AnimalController.update(id_animal, { status: 'Morto' })
+      if (!updateAnimal) {
+        return res.status(400).send({ message: 'Problemas ao cadastrar.' })
       }
     }
     resHTTP(req, res, MortesAnimalController, execute)
+  },
+
+  async cadastrarDoenca(req, res) {
+    const execute = async () => {
+      const { id_animal } = req.body
+      const updateAnimal = await AnimalController.update(id_animal, { status: 'Doente' })
+      if (!updateAnimal) {
+        return res.status(400).send({ message: 'Problemas ao cadastrar.' })
+      }
+    }
+    resHTTP(req, res, DoencasController, execute)
   }
 }
