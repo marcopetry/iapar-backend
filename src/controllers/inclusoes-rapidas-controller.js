@@ -7,6 +7,7 @@ const CompraAnimalController = require('./ModelsControllers/ComprasAnimaisContro
 const VendaAnimalController = require('./ModelsControllers/VendasAnimaisControllers')
 const MortesAnimalController = require('./ModelsControllers/MortesControllers')
 const DoencasController = require('./ModelsControllers/DoencasControllers')
+const TratamentoController = require('./ModelsControllers/TratamentosControllers')
 
 const JWT = require('../services/auth-service')
 
@@ -85,5 +86,16 @@ module.exports = {
       }
     }
     resHTTP(req, res, DoencasController, execute)
+  },
+
+  async cadastrarTratamento(req, res) {
+    const execute = async () => {
+      const { id_animal } = req.body
+      const updateAnimal = await AnimalController.update(id_animal, { status: 'Tratamento' })
+      if (!updateAnimal) {
+        return res.status(400).send({ message: 'Problemas ao cadastrar.' })
+      }
+    }
+    resHTTP(req, res, TratamentoController, execute)
   }
 }
