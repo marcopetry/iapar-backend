@@ -2,14 +2,21 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('prenhez', {
+    return queryInterface.createTable('prenhezes', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
       },
-      id_animal: {
+      id_vaca: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { model: 'animais', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      id_touro: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: 'animais', key: 'id' },
@@ -18,13 +25,21 @@ module.exports = {
       },
       id_inseminacao: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: { model: 'inseminacoes', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
       data_diagnostico: {
         type: Sequelize.DATE,
+        allowNull: false
+      },
+      data_prenhez: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      tipo_prenhez: {
+        type: Sequelize.ENUM('Inseminação', 'Monta natural'),
         allowNull: false
       },
       created_at: {
@@ -39,6 +54,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('prenhez')
+    return queryInterface.dropTable('prenhezes')
   }
 }

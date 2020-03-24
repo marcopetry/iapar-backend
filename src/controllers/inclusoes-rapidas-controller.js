@@ -13,7 +13,9 @@ const JWT = require('../services/auth-service')
 
 function resHTTP(req, res, ControllerCadastrar, executeFuncion) {
   JWT.authorizeProperty(req, res, async () => {
-    executeFuncion()
+    if (executeFuncion) {
+      executeFuncion()
+    }
     const response = await ControllerCadastrar.store(req)
     return response ? res.status(201).send(response) : res.status(400).send({ message: 'Problemas ao cadastrar.' })
   })

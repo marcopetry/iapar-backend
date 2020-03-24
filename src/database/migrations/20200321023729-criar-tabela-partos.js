@@ -32,7 +32,7 @@ module.exports = {
         allowNull: false
       },
       condicao_nascimento: {
-        type: Sequelize.STRING,
+        type: Sequelize.ENUM('Vivo', 'Morto'),
         allowNull: false
       },
       created_at: {

@@ -1,12 +1,15 @@
 const { Model, DataTypes } = require('sequelize')
 
-class Prenhez extends Model {
+class Prenheze extends Model {
   static init(sequelize) {
     super.init(
       {
-        id_animal: DataTypes.INTEGER,
+        id_vaca: DataTypes.INTEGER,
+        id_touro: DataTypes.INTEGER,
         id_inseminacao: DataTypes.INTEGER,
-        data_diagnostico: DataTypes.DATE
+        data_diagnostico: DataTypes.DATE,
+        tipo_prenhez: DataTypes.ENUM('Inseminação', 'Monta natural'),
+        data_prenhez: DataTypes.INTEGER
       },
       {
         sequelize
@@ -14,9 +17,10 @@ class Prenhez extends Model {
     )
   }
   static associate(models) {
-    this.belongsTo(models.Animais, { foreignKey: 'id_animal', as: 'animal' })
+    this.belongsTo(models.Animais, { foreignKey: 'id_vaca', as: 'vaca' })
+    this.belongsTo(models.Animais, { foreignKey: 'id_touro', as: 'touro' })
     this.belongsTo(models.Inseminacoes, { foreignKey: 'id_inseminacao', as: 'inseminacao' })
   }
 }
 
-module.exports = Prenhez
+module.exports = Prenheze

@@ -21,7 +21,7 @@ module.exports = {
         allowNull: false
       },
       tipo_mastite: {
-        type: Sequelize.STRING,
+        type: Sequelize.ENUM('Clínica', 'Subclínica'),
         allowNull: false
       },
       anterior_direita: {

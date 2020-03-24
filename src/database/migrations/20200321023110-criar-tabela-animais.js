@@ -26,7 +26,7 @@ module.exports = {
       },
       peso: {
         type: Sequelize.DOUBLE,
-        allowNull: false
+        allowNull: true
       },
       raca: {
         type: Sequelize.STRING,
