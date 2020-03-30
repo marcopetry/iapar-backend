@@ -8,6 +8,7 @@ const VendaAnimalController = require('./ModelsControllers/VendasAnimaisControll
 const MortesAnimalController = require('./ModelsControllers/MortesControllers')
 const DoencasController = require('./ModelsControllers/DoencasControllers')
 const TratamentoController = require('./ModelsControllers/TratamentosControllers')
+const MedicamentoController = require('./ModelsControllers/MedicamentosControllers')
 
 const JWT = require('../services/auth-service')
 
@@ -27,7 +28,18 @@ module.exports = {
   },
 
   async cadastrarPartos(req, res) {
-    resHTTP(req, res, PartoController)
+    const cadastroAnimal = await AnimalController.store(req)
+    if (!cadastroAnimal) {
+      return res.status(500).send({ message: 'Problemas ao cadastrar.' })
+    }
+    const newDates = {
+      ...req,
+      body: {
+        ...req.body,
+        id_bezerro: cadastroAnimal.id
+      }
+    }
+    resHTTP(newDates, res, PartoController)
   },
 
   async cadastrarInseminacao(req, res) {
@@ -99,5 +111,27 @@ module.exports = {
       }
     }
     resHTTP(req, res, TratamentoController, execute)
+  },
+
+  async cadastrarRemedio(req, res) {
+    MedicamentoController.store(req, res)
+  },
+
+  async retornarAnimaisPropriedade(req, res) {
+    JWT.authorizeProperty(req, res, async () => {
+      const response = await AnimalController.allAnimalsForProperty(req)
+      return response ? res.status(200).send(response) : res.status(400)
+    })
+  },
+
+  async retornarRemedios(req, res) {
+    MedicamentoController.store(req, res)
+  },
+
+  async retornarUltimaInseminacaoVaca(req, res) {
+    const response = await InseminacaoController.retornaUltimaInseminacao(req)
+    response
+      ? res.status(200).send(response)
+      : res.status(404).send({ message: 'Não existe inseminação feita neste animal.' })
   }
 }

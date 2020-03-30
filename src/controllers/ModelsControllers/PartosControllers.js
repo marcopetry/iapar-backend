@@ -16,6 +16,7 @@ module.exports = {
       })
       return response
     } catch (e) {
+      console.log(e)
       return false
     }
   }

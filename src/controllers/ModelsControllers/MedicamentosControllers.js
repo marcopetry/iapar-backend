@@ -16,6 +16,7 @@ module.exports = {
           ? res.status(201).send({ message: 'Cadastrado com sucesso.', response })
           : res.status(200).send({ message: 'Problemas ao cadastrar.' })
       } catch (error) {
+        console.log(error)
         res.status(500).send({ message: 'Problema no servidor.' })
       }
     })

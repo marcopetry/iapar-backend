@@ -18,7 +18,7 @@ module.exports = {
       },
       id_touro: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: { model: 'animais', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'

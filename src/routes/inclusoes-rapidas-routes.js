@@ -13,5 +13,10 @@ routes.post('/venda/:id_propriedade/novo', InclusoesRapidasController.cadastrarV
 routes.post('/morte/:id_propriedade/novo', InclusoesRapidasController.cadastrarMorteAnimal)
 routes.post('/doenca/:id_propriedade/novo', InclusoesRapidasController.cadastrarDoenca)
 routes.post('/tratamento/:id_propriedade/novo', InclusoesRapidasController.cadastrarTratamento)
+routes.post('/medicamentos/novo', InclusoesRapidasController.cadastrarRemedio)
+
+routes.get('/animal/:id_propriedade', InclusoesRapidasController.retornarAnimaisPropriedade)
+routes.get('/medicamentos', InclusoesRapidasController.retornarRemedios)
+routes.get('/inseminacao/ultima/:id_vaca', InclusoesRapidasController.retornarUltimaInseminacaoVaca)
 
 module.exports = routes

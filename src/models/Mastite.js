@@ -6,7 +6,7 @@ class Mastite extends Model {
       {
         id_animal: DataTypes.INTEGER,
         data_diagnostico: DataTypes.DATE,
-        tipo_mastite: DataTypes.STRING,
+        tipo_mastite: DataTypes.ENUM('Clínica', 'Subclínica'),
         anterior_direita: DataTypes.ENUM('Leve', 'Moderada', 'Severa', 'Ausente'),
         anterior_esquerda: DataTypes.ENUM('Leve', 'Moderada', 'Severa', 'Ausente'),
         posterior_direita: DataTypes.ENUM('Leve', 'Moderada', 'Severa', 'Ausente'),
