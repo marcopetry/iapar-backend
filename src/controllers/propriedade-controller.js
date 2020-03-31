@@ -115,27 +115,100 @@ module.exports = {
   async buscarTodasPropriedadesSobSuaResponsabilidade(req, res) {
     JWT.authorize(req, res, async tokenDecodificado => {
       if (tokenDecodificado.tipo_usuario === 'tecnico') {
-        const idPropriedadesTecnico = await PropriedadeTecnico.findAll({
-          where: {
-            id_tecnico: tokenDecodificado.id
-          }
-          //attributes: ['id_propriedade', 'id']
-        })
-
-        let ids = []
-        idPropriedadesTecnico.forEach(element => {
-          ids.push({
-            id: element.id,
-            id_propriedade: element.id_propriedade
+        try {
+          const idPropriedadesTecnico = await PropriedadeTecnico.findAll({
+            where: {
+              id_tecnico: tokenDecodificado.id
+            }
+            //attributes: ['id_propriedade', 'id']
           })
-        })
-        let propriedades = []
-        const promisses = ids.map(async id => {
+
+          let ids = []
+          idPropriedadesTecnico.forEach(element => {
+            ids.push({
+              id: element.id,
+              id_propriedade: element.id_propriedade
+            })
+          })
+          let propriedades = []
+          const promisses = ids.map(async id => {
+            const response = await Propriedade.findOne({
+              attributes: ['id', 'nome_propriedade', 'data_proxima_visita'],
+              where: {
+                id: id.id_propriedade
+              },
+              include: [
+                {
+                  association: 'dono_propriedade',
+                  attributes: ['cnpj'],
+                  include: {
+                    association: 'usuario',
+                    attributes: ['nome', 'email', 'telefone', 'cidade']
+                  }
+                }
+                /* {
+                  association: 'tecnicos',
+                  through: 'propriedade_tecnicos'
+                  include: {
+                    association: 'usuarios'
+                  }
+                } */
+              ]
+            })
+            const { usuario } = ({ dono_propriedade } = response.dono_propriedade)
+            propriedades.push({
+              id_propriedade_tecnico: id.id,
+              id: response.id,
+              nome_propriedade: response.nome_propriedade,
+              data_proxima_visita: converterStringEmData.formataDataEmString(response.data_proxima_visita), //formatarData(propriedade.data_proxima_visita),
+              nome_proprietario: usuario.nome,
+              email: usuario.email,
+              telefone: usuario.telefone,
+              cidade: usuario.cidade
+            })
+          })
+
+          await Promise.all(promisses)
+          if (!propriedades) return res.status(200).send({ message: 'Problemas no carregamento.' })
+          return res.status(200).send(propriedades)
+        } catch (error) {
+          console.log(error)
+          res.status(400).send({ message: 'Falha ao carregar propriedades.' })
+        }
+      }
+
+      if (tokenDecodificado.tipo_usuario === 'proprietario') {
+        try {
           const response = await Propriedade.findAll({
             attributes: ['id', 'nome_propriedade', 'data_proxima_visita'],
             where: {
-              id: id.id_propriedade
-            },
+              id_proprietario: tokenDecodificado.id
+            }
+          })
+
+          if (!response) {
+            return res.status(200).send({ message: 'Problemas no carregamento.' })
+          } else {
+            let responseFormatada = []
+            response.forEach(element => {
+              responseFormatada.push({
+                id: element.id,
+                nome_propriedade: element.nome_propriedade,
+                data_proxima_visita: converterStringEmData.formataDataEmString(element.data_proxima_visita)
+              })
+            })
+            return res.status(200).send(responseFormatada)
+          }
+        } catch (error) {
+          console.log(error)
+          res.status(400).send({ message: 'Falha ao carregar propriedades.' })
+        }
+      }
+
+      if (tokenDecodificado.tipo_usuario === 'admin') {
+        try {
+          const response = await Propriedade.findAll({
+            attributes: ['id', 'nome_propriedade', 'data_proxima_visita'],
             include: [
               {
                 association: 'dono_propriedade',
@@ -145,43 +218,30 @@ module.exports = {
                   attributes: ['nome', 'email', 'telefone', 'cidade']
                 }
               }
-              /* {
-                association: 'tecnicos',
-                through: 'propriedade_tecnicos'
-                include: {
-                  association: 'usuarios'
-                }
-              } */
             ]
           })
-          const [propriedade] = response
-          propriedades.push({
-            id_propriedade_tecnico: id.id,
-            propriedade
+          let propriedades = []
+          response.forEach(element => {
+            const { usuario } = ({ dono_propriedade } = element.dono_propriedade)
+            propriedades.push({
+              id: element.id,
+              nome_propriedade: element.nome_propriedade,
+              data_proxima_visita: converterStringEmData.formataDataEmString(element.data_proxima_visita), //formatarData(propriedade.data_proxima_visita),
+              nome_proprietario: usuario.nome,
+              email: usuario.email,
+              telefone: usuario.telefone,
+              cidade: usuario.cidade
+            })
           })
-        })
-        await Promise.all(promisses)
-        if (!propriedades) return res.status(200).send({ message: 'Problemas no carregamento.' })
-        return res.status(200).send(propriedades)
-      }
-      /* 
-      if (tokenDecodificado.tipo_usuario === 'proprietario') {
-        const response = await Propriedade.findAll({
-          attributes: [
-            'id',
-            'id_proprietario',
-            'nome_propriedade',
-            'longitude',
-            'latitude',
-            'data_inicio_programa',
-            'data_proxima_visita'
-          ],
-          where: {}
-        })
 
-        if (!response) return res.status(200).send({ message: 'Problemas no carregamento.' })
-        return res.status(200).send(promisses)
-      } */
+          if (!propriedades) return res.status(200).send({ message: 'Problemas no carregamento.' })
+          return res.status(200).send(propriedades)
+        } catch (error) {
+          console.log(error)
+          return res.status(400).send({ message: 'Falha ao carregar propriedades.' })
+        }
+      }
+      return res.status(404)
     })
   }
 }
